@@ -56,6 +56,7 @@ export interface MenuItem {
   category: string;
   isAvailable: boolean;
   imageUrl?: string;
+  description?: string;
   isVeg?: boolean;        // FE request to Member 1 (Indian campus UX need)
   basePrepSeconds?: number;
 }
@@ -63,6 +64,7 @@ export interface MenuItem {
 export interface ComboSuggestion {
   itemIds: string[];
   label: string;          // "Cold Coffee + Grilled Veg Sandwich"
+  comboPrice?: number;
   savings?: number;
   confidence: number;
 }
@@ -136,6 +138,7 @@ export interface ServerToClientEvents {
   'order:cancelled': (p: { orderId: string; reason: string; refundedAmount: number }) => void;
   'menu:availability_changed': (p: { menuItemId: string; isAvailable: boolean }) => void;
   'canteen:status_changed': (p: { canteenId: string; isOpen: boolean }) => void;
+  'canteen:queue_updated': (p: { canteenId: string; activeOrders: number; estimatedWaitMins: number }) => void;
   'wallet:updated': (p: Wallet) => void;
 }
 

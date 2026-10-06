@@ -1,0 +1,47 @@
+[
+  {
+    "id": "canteen_main",
+    "name": "Main Canteen",
+    "location": "Block A, Central Campus",
+    "isOpen": true,
+    "operatingHours": { "open": "08:00", "close": "22:00" },
+    "imageUrl": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80",
+    "liveQueue": { "activeOrders": 12, "estimatedWaitMins": 8 }
+  },
+  {
+    "id": "canteen_juice",
+    "name": "Juice Corner",
+    "location": "Near Sports Complex",
+    "isOpen": true,
+    "operatingHours": { "open": "08:30", "close": "20:00" },
+    "imageUrl": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=600&q=80",
+    "liveQueue": { "activeOrders": 28, "estimatedWaitMins": 18 }
+  },
+  {
+    "id": "canteen_south",
+    "name": "South Food Hub",
+    "location": "Engineering Block 3",
+    "isOpen": true,
+    "operatingHours": { "open": "07:30", "close": "21:00" },
+    "imageUrl": "https://images.unsplash.com/photo-1630383249896-424e482df921?auto=format&fit=crop&w=600&q=80",
+    "liveQueue": { "activeOrders": 15, "estimatedWaitMins": 10 }
+  },
+  {
+    "id": "canteen_night",
+    "name": "Night Cafe",
+    "location": "Hostel Square",
+    "isOpen": false,
+    "operatingHours": { "open": "20:00", "close": "04:00" },
+    "imageUrl": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80",
+    "liveQueue": { "activeOrders": 0, "estimatedWaitMins": 0 }
+  },
+  {
+    "id": "canteen_mini",
+    "name": "Mini Bites",
+    "location": "Library Ground Floor",
+    "isOpen": true,
+    "operatingHours": { "open": "09:00", "close": "19:00" },
+    "imageUrl": "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80",
+    "liveQueue": { "activeOrders": 6, "estimatedWaitMins": 5 }
+  }
+]

@@ -1,11 +1,22 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { Home, ReceiptText, Wallet, User as UserIcon } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 import { ConnectionDot } from '@/components/common/ConnectionDot';
+import { api } from '@/lib/api/client';
+import { qk } from '@/lib/api/queryKeys';
+import { formatINR } from '@/lib/format';
 import { cn } from '@/lib/utils';
+import type { Wallet as WalletType } from '@/types';
 
 export const StudentShell: React.FC = () => {
   const navigate = useNavigate();
+
+  const { data: wallet } = useQuery({
+    queryKey: qk.wallet,
+    queryFn: () => api<WalletType>('/wallet'),
+    staleTime: 30000,
+  });
 
   const navItems = [
     { to: '/student', label: 'Home', icon: Home, end: true },
@@ -28,13 +39,16 @@ export const StudentShell: React.FC = () => {
             <ConnectionDot className="ml-1" />
           </div>
 
-          {/* Wallet placeholder chip */}
+          {/* Wallet Live Balance Chip */}
           <button
             onClick={() => navigate('/student/wallet')}
-            className="flex items-center gap-1.5 rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-semibold text-foreground transition-colors hover:bg-muted"
+            className="flex items-center gap-1.5 rounded-full border border-border bg-muted/50 px-3 py-1 text-xs font-semibold text-foreground transition-colors hover:bg-muted active:scale-95 shadow-xs"
+            aria-label="View campus wallet"
           >
             <span>💰</span>
-            <span className="font-mono">₹--</span>
+            <span className="font-mono">
+              {wallet !== undefined ? formatINR(wallet.balance) : '₹--'}
+            </span>
           </button>
         </header>
 

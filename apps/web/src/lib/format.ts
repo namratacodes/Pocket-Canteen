@@ -1,4 +1,4 @@
-import { format, formatDistanceToNowStrict } from 'date-fns';
+import { format, formatDistanceToNowStrict, isThisYear } from 'date-fns';
 
 export const formatINR = (n: number) =>
   new Intl.NumberFormat('en-IN', {
@@ -13,6 +13,15 @@ export const formatTime = (iso: string) => {
     return format(new Date(iso), 'h:mm a');
   } catch {
     return '--:--';
+  }
+};
+
+export const formatDate = (iso: string) => {
+  try {
+    const d = new Date(iso);
+    return format(d, isThisYear(d) ? 'd MMM' : 'd MMM yyyy');
+  } catch {
+    return '--';
   }
 };
 

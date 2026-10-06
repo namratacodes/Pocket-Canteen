@@ -1,0 +1,395 @@
+{
+  "items": {
+    "canteen_main": [
+      {
+        "id": "item_samosa",
+        "canteenId": "canteen_main",
+        "name": "Samosa (2 pc)",
+        "price": 20,
+        "category": "Snacks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Crispy golden pastry stuffed with spiced potato and peas. Served with sweet tamarind and green chutney.",
+        "basePrepSeconds": 180,
+        "imageUrl": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_chai",
+        "canteenId": "canteen_main",
+        "name": "Masala Chai",
+        "price": 15,
+        "category": "Drinks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Brewed Indian tea with fresh ginger, cardamom and aromatic whole spices.",
+        "basePrepSeconds": 120,
+        "imageUrl": "https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_chicken_roll",
+        "canteenId": "canteen_main",
+        "name": "Chicken Kathi Roll",
+        "price": 70,
+        "category": "Snacks",
+        "isAvailable": true,
+        "isVeg": false,
+        "description": "Juicy spiced shredded chicken wrapped in a flaky paratha with sliced red onions and tangy sauce.",
+        "basePrepSeconds": 480,
+        "imageUrl": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_masala_dosa",
+        "canteenId": "canteen_main",
+        "name": "Masala Dosa",
+        "price": 60,
+        "category": "South Indian",
+        "isAvailable": false,
+        "isVeg": true,
+        "description": "Crispy fermented crepe filled with fragrant spiced aloo masala, served with coconut chutney and sambar.",
+        "basePrepSeconds": 420,
+        "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_vada_pav",
+        "canteenId": "canteen_main",
+        "name": "Vada Pav (2 pc)",
+        "price": 30,
+        "category": "Snacks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Mumbai classic batata vada sandwiched in soft pav smeared with dry garlic and coriander chutneys.",
+        "basePrepSeconds": 240,
+        "imageUrl": "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_veg_thali",
+        "canteenId": "canteen_main",
+        "name": "Special Veg Thali",
+        "price": 110,
+        "category": "Meals",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Complete meal with Paneer Butter Masala, Dal Tadka, 3 Butter Rotis, Steamed Rice, Salad and Gulab Jamun.",
+        "basePrepSeconds": 600,
+        "imageUrl": "https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_egg_curry_rice",
+        "canteenId": "canteen_main",
+        "name": "Egg Curry Rice Bowl",
+        "price": 85,
+        "category": "Meals",
+        "isAvailable": true,
+        "isVeg": false,
+        "description": "Two boiled eggs simmered in spicy onion-tomato gravy served over fragrant jeera rice.",
+        "basePrepSeconds": 360,
+        "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_idli_sambar",
+        "canteenId": "canteen_main",
+        "name": "Steamed Idli (3 pc)",
+        "price": 40,
+        "category": "South Indian",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Pillowy soft steamed rice cakes served hot with piping lentil sambar and freshly ground coconut chutney.",
+        "basePrepSeconds": 180,
+        "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_cold_coffee",
+        "canteenId": "canteen_main",
+        "name": "Classic Cold Coffee",
+        "price": 50,
+        "category": "Drinks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Chilled blended coffee with rich chocolate drizzle and creamy froth.",
+        "basePrepSeconds": 180,
+        "imageUrl": "https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_veg_sandwich",
+        "canteenId": "canteen_main",
+        "name": "Grilled Veg Sandwich",
+        "price": 60,
+        "category": "Snacks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Toasted triple-layer sandwich stuffed with cheese, cucumbers, tomatoes and mint chutney.",
+        "basePrepSeconds": 300,
+        "imageUrl": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_paneer_roll",
+        "canteenId": "canteen_main",
+        "name": "Paneer Tikka Roll",
+        "price": 75,
+        "category": "Snacks",
+        "isAvailable": false,
+        "isVeg": true,
+        "description": "Charred tandoori paneer cubes wrapped in layered paratha with spicy mint sauce.",
+        "basePrepSeconds": 450,
+        "imageUrl": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_gulab_jamun",
+        "canteenId": "canteen_main",
+        "name": "Gulab Jamun (2 pc)",
+        "price": 30,
+        "category": "Desserts",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Soft fried milk dumplings soaked in warm cardamom and rose scented sugar syrup.",
+        "basePrepSeconds": 60,
+        "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "canteen_juice": [
+      {
+        "id": "item_mango_shake",
+        "canteenId": "canteen_juice",
+        "name": "Fresh Mango Shake",
+        "price": 60,
+        "category": "Drinks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Thick Alphonso mango pulp blended with rich milk and vanilla scoop.",
+        "basePrepSeconds": 240,
+        "imageUrl": "https://images.unsplash.com/photo-1546173159-315724a31696?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_watermelon_juice",
+        "canteenId": "canteen_juice",
+        "name": "Watermelon Splash",
+        "price": 40,
+        "category": "Drinks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "100% cold-pressed fresh watermelon juice with a hint of mint and black salt.",
+        "basePrepSeconds": 180,
+        "imageUrl": "https://images.unsplash.com/photo-1589733955941-5eeaf752f6dd?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_fruit_salad",
+        "canteenId": "canteen_juice",
+        "name": "Seasonal Fruit Bowl",
+        "price": 70,
+        "category": "Snacks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Freshly cut papaya, kiwi, apples, pomegranate and pineapple with chaat seasoning.",
+        "basePrepSeconds": 240,
+        "imageUrl": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_sweet_lime_juice",
+        "canteenId": "canteen_juice",
+        "name": "Sweet Lime (Mosambi)",
+        "price": 45,
+        "category": "Drinks",
+        "isAvailable": false,
+        "isVeg": true,
+        "description": "Freshly squeezed citrus juice loaded with Vitamin C.",
+        "basePrepSeconds": 180,
+        "imageUrl": "https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_banana_smoothie",
+        "canteenId": "canteen_juice",
+        "name": "Peanut Butter Banana Shake",
+        "price": 75,
+        "category": "Drinks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Protein packed shake with ripe bananas, creamy peanut butter and honey.",
+        "basePrepSeconds": 240,
+        "imageUrl": "https://images.unsplash.com/photo-1553530666-ba11a7da3888?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_cheese_toast",
+        "canteenId": "canteen_juice",
+        "name": "Chilli Cheese Toast",
+        "price": 55,
+        "category": "Snacks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Crispy toasted bread loaded with melted cheddar, green chillies and herbs.",
+        "basePrepSeconds": 300,
+        "imageUrl": "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "canteen_south": [
+      {
+        "id": "item_sh_ghee_roast",
+        "canteenId": "canteen_south",
+        "name": "Ghee Roast Dosa",
+        "price": 75,
+        "category": "South Indian",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Golden crispy crepe roasted in pure desi ghee, served with 3 varieties of chutneys and piping sambar.",
+        "basePrepSeconds": 360,
+        "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_sh_filter_coffee",
+        "canteenId": "canteen_south",
+        "name": "Degree Filter Coffee",
+        "price": 25,
+        "category": "Drinks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Traditional South Indian frothy chicory coffee served in a brass dabarah.",
+        "basePrepSeconds": 120,
+        "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_sh_medu_vada",
+        "canteenId": "canteen_south",
+        "name": "Medu Vada (2 pc)",
+        "price": 40,
+        "category": "South Indian",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Crispy fried lentil doughnuts served with hot spiced sambar.",
+        "basePrepSeconds": 240,
+        "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_sh_curd_rice",
+        "canteenId": "canteen_south",
+        "name": "Curd Rice Bowl",
+        "price": 50,
+        "category": "Meals",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Comforting tempered curd rice garnished with mustard, curry leaves and pomegranate.",
+        "basePrepSeconds": 180,
+        "imageUrl": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_sh_rava_onion_dosa",
+        "canteenId": "canteen_south",
+        "name": "Onion Rava Dosa",
+        "price": 70,
+        "category": "South Indian",
+        "isAvailable": false,
+        "isVeg": true,
+        "description": "Semolina lace crepe peppered with finely chopped shallots and roasted cumin.",
+        "basePrepSeconds": 480,
+        "imageUrl": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "canteen_night": [
+      {
+        "id": "item_nc_maggi",
+        "canteenId": "canteen_night",
+        "name": "Midnight Cheese Maggi",
+        "price": 50,
+        "category": "Snacks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Two-minute noodles with sweet corn, oregano and melted mozzarella.",
+        "basePrepSeconds": 300,
+        "imageUrl": "https://images.unsplash.com/photo-1612927601601-6638404737ce?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_nc_chicken_momos",
+        "canteenId": "canteen_night",
+        "name": "Steamed Chicken Momos (6 pc)",
+        "price": 80,
+        "category": "Snacks",
+        "isAvailable": true,
+        "isVeg": false,
+        "description": "Juicy minced chicken dumplings served with fiery garlic red chilli dip.",
+        "basePrepSeconds": 420,
+        "imageUrl": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=400&q=80"
+      }
+    ],
+    "canteen_mini": [
+      {
+        "id": "item_mb_croissant",
+        "canteenId": "canteen_mini",
+        "name": "Butter Croissant",
+        "price": 60,
+        "category": "Snacks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Flaky French butter pastry freshly baked every morning.",
+        "basePrepSeconds": 60,
+        "imageUrl": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=400&q=80"
+      },
+      {
+        "id": "item_mb_cappuccino",
+        "canteenId": "canteen_mini",
+        "name": "Hot Cappuccino",
+        "price": 50,
+        "category": "Drinks",
+        "isAvailable": true,
+        "isVeg": true,
+        "description": "Rich espresso with steamed milk and thick foam cap.",
+        "basePrepSeconds": 180,
+        "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80"
+      }
+    ]
+  },
+  "combos": {
+    "canteen_main": [
+      {
+        "itemIds": ["item_samosa", "item_chai"],
+        "label": "Samosa + Masala Chai",
+        "comboPrice": 30,
+        "savings": 5,
+        "confidence": 0.94
+      },
+      {
+        "itemIds": ["item_cold_coffee", "item_veg_sandwich"],
+        "label": "Cold Coffee + Grilled Sandwich",
+        "comboPrice": 100,
+        "savings": 10,
+        "confidence": 0.88
+      },
+      {
+        "itemIds": ["item_idli_sambar", "item_chai"],
+        "label": "Idli Sambar + Chai Breakfast",
+        "comboPrice": 50,
+        "savings": 5,
+        "confidence": 0.82
+      }
+    ],
+    "canteen_juice": [
+      {
+        "itemIds": ["item_mango_shake", "item_cheese_toast"],
+        "label": "Mango Shake + Chilli Cheese Toast",
+        "comboPrice": 100,
+        "savings": 15,
+        "confidence": 0.91
+      },
+      {
+        "itemIds": ["item_watermelon_juice", "item_fruit_salad"],
+        "label": "Hydration Bowl Combo",
+        "comboPrice": 95,
+        "savings": 15,
+        "confidence": 0.86
+      }
+    ],
+    "canteen_south": [
+      {
+        "itemIds": ["item_sh_ghee_roast", "item_sh_filter_coffee"],
+        "label": "Ghee Roast + Filter Coffee",
+        "comboPrice": 90,
+        "savings": 10,
+        "confidence": 0.96
+      },
+      {
+        "itemIds": ["item_sh_medu_vada", "item_sh_filter_coffee"],
+        "label": "Medu Vada + Filter Coffee",
+        "comboPrice": 55,
+        "savings": 10,
+        "confidence": 0.89
+      }
+    ]
+  }
+}

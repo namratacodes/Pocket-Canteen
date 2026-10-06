@@ -25,6 +25,15 @@ const WalletPage = React.lazy(() =>
 const ProfilePage = React.lazy(() =>
   import('@/pages/student/ProfilePage').then((m) => ({ default: m.ProfilePage }))
 );
+const MenuPage = React.lazy(() =>
+  import('@/features/student/menu/MenuPage').then((m) => ({ default: m.MenuPage }))
+);
+const CheckoutPage = React.lazy(() =>
+  import('@/features/student/checkout/CheckoutPage').then((m) => ({ default: m.CheckoutPage }))
+);
+const OrderConfirmationPage = React.lazy(() =>
+  import('@/features/student/orders/OrderConfirmationPage').then((m) => ({ default: m.OrderConfirmationPage }))
+);
 
 const StaffShell = React.lazy(() =>
   import('@/components/layout/StaffShell').then((m) => ({ default: m.StaffShell }))
@@ -101,10 +110,34 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: 'c/:canteenId',
+        element: (
+          <Suspense fallback={<FullPageSpinner />}>
+            <MenuPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'checkout',
+        element: (
+          <Suspense fallback={<FullPageSpinner />}>
+            <CheckoutPage />
+          </Suspense>
+        ),
+      },
+      {
         path: 'orders',
         element: (
           <Suspense fallback={<FullPageSpinner />}>
             <OrderHistoryPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: 'orders/:orderId',
+        element: (
+          <Suspense fallback={<FullPageSpinner />}>
+            <OrderConfirmationPage />
           </Suspense>
         ),
       },

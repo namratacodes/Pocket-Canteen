@@ -1,24 +1,42 @@
+export const qk = {
+  me: ['me'] as const,
+  canteens: ['canteens'] as const,
+  canteen: (id: string) => ['canteens', id] as const,
+  menu: (canteenId: string) => ['menu', canteenId] as const,
+  combos: (canteenId: string) => ['combos', canteenId] as const,
+  order: (id: string) => ['orders', id] as const,
+  ordersActive: ['orders', 'active'] as const,
+  ordersPast: ['orders', 'past'] as const,
+  wallet: ['wallet'] as const,
+  ledger: (type: string) => ['wallet', 'ledger', type] as const,
+  kitchen: (canteenId: string) => ['kitchen', canteenId] as const,
+  kitchenMenu: ['kitchen', 'menu'] as const,
+  analytics: (name: string, params: object) => ['analytics', name, params] as const,
+  admin: (name: string, params?: object) => ['admin', name, params ?? {}] as const,
+};
+
+// Backwards compatibility alias
 export const queryKeys = {
   auth: {
-    me: ['auth', 'me'] as const,
+    me: qk.me,
   },
   canteens: {
-    all: ['canteens'] as const,
-    detail: (id: string) => ['canteens', id] as const,
-    menu: (id: string) => ['canteens', id, 'menu'] as const,
-    combos: (id: string) => ['canteens', id, 'combos'] as const,
+    all: qk.canteens,
+    detail: (id: string) => qk.canteen(id),
+    menu: (id: string) => qk.menu(id),
+    combos: (id: string) => qk.combos(id),
   },
   orders: {
     all: ['orders'] as const,
-    active: ['orders', 'active'] as const,
-    past: ['orders', 'past'] as const,
-    detail: (id: string) => ['orders', id] as const,
+    active: qk.ordersActive,
+    past: qk.ordersPast,
+    detail: (id: string) => qk.order(id),
   },
   kitchen: {
-    orders: (canteenId: string) => ['kitchen', canteenId, 'orders'] as const,
+    orders: (canteenId: string) => qk.kitchen(canteenId),
   },
   wallet: {
-    balance: ['wallet'] as const,
+    balance: qk.wallet,
     ledger: ['wallet', 'ledger'] as const,
   },
   admin: {

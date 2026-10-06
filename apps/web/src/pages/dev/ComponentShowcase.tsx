@@ -13,7 +13,10 @@ import { ConfirmDialog } from '@/components/common/ConfirmDialog';
 import { FullPageSpinner } from '@/components/common/FullPageSpinner';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { useConnection } from '@/stores/connectionStore';
-import { Coffee, RotateCw } from 'lucide-react';
+import { Coffee, RotateCw, ShoppingBag, Radio } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
+import { toggleItemAvailability } from '@/mocks/handlers/menu';
 import type { OrderStatus } from '@/types';
 
 export const ComponentShowcase: React.FC = () => {
@@ -332,6 +335,56 @@ export const ComponentShowcase: React.FC = () => {
               }, 1200);
             }}
           />
+        </CardContent>
+      </Card>
+
+      {/* 11. Phase 2 Student Ordering & Mock Socket Testing */}
+      <Card className="border-brand/40 bg-brand-soft/20">
+        <CardHeader>
+          <CardTitle className="text-base flex items-center gap-2">
+            <ShoppingBag className="h-5 w-5 text-brand" />
+            <span>11. Phase 2 Student Ordering & Live Socket Controls</span>
+          </CardTitle>
+          <CardDescription>
+            Simulate real-time menu events and jump directly into the student ordering journey.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <Button
+              onClick={() => {
+                const item = toggleItemAvailability('canteen_main', 'item_samosa');
+                if (item) {
+                  toast.info(
+                    `Socket emitted menu:availability_changed -> Samosa is now ${item.isAvailable ? 'AVAILABLE' : 'SOLD OUT'}`
+                  );
+                }
+              }}
+              variant="outline"
+              className="gap-2 border-brand/40 text-brand-dark hover:bg-brand/10 font-semibold"
+            >
+              <Radio className="h-4 w-4 text-brand" />
+              <span>Toggle Samosa Availability (Socket Event)</span>
+            </Button>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3 pt-2 border-t border-border/60">
+            <Link to="/student">
+              <Button size="sm" className="bg-brand text-white font-semibold">
+                Open Canteen Selector (/student)
+              </Button>
+            </Link>
+            <Link to="/student/c/canteen_main">
+              <Button size="sm" variant="outline" className="font-semibold">
+                Open Main Canteen Menu (/student/c/canteen_main)
+              </Button>
+            </Link>
+            <Link to="/student/checkout">
+              <Button size="sm" variant="outline" className="font-semibold">
+                Open Checkout (/student/checkout)
+              </Button>
+            </Link>
+          </div>
         </CardContent>
       </Card>
     </div>
