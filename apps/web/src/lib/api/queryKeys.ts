@@ -40,6 +40,10 @@ export const queryKeys = {
     ledger: ['wallet', 'ledger'] as const,
   },
   admin: {
+    
+    
+    settlementEntries: (id: string) => ['admin', 'settlement-entries', id] as const,
+    staffList: (canteenId?: string) => ['admin', 'staff', canteenId ?? 'all'] as const,
     overview: ['admin', 'overview'] as const,
     canteens: ['admin', 'canteens'] as const,
     staff: ['admin', 'staff'] as const,
