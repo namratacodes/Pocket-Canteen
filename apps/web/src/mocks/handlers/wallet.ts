@@ -21,7 +21,7 @@ export const setMockWalletBalance = (newBalance: number) => {
 };
 
 export const walletHandlers = [
-  http.get('/api/v1/wallet', () => {
+  http.get('*/wallet', () => {
     return HttpResponse.json(mockWallet);
   }),
 ];

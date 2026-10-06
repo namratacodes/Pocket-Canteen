@@ -21,7 +21,7 @@ export const resetMockOrders = () => {
 
 export const ordersHandlers = [
   // GET /api/v1/orders/:id
-  http.get('/api/v1/orders/:id', ({ params }) => {
+  http.get('*/orders/:id', ({ params }) => {
     const { id } = params as { id: string };
     const order = mockOrders.get(id);
 
@@ -36,7 +36,7 @@ export const ordersHandlers = [
   }),
 
   // POST /api/v1/orders
-  http.post('/api/v1/orders', async ({ request }) => {
+  http.post('*/orders', async ({ request }) => {
     const body = (await request.json().catch(() => null)) as CreateOrderRequest | null;
 
     if (!body || !body.canteenId || !body.items || body.items.length === 0) {
@@ -174,7 +174,7 @@ export const ordersHandlers = [
   }),
 
   // POST /api/v1/payments/verify
-  http.post('/api/v1/payments/verify', async ({ request }) => {
+  http.post('*/payments/verify', async ({ request }) => {
     const body = (await request.json().catch(() => ({}))) as {
       orderId?: string;
       razorpay_payment_id?: string;
@@ -193,7 +193,7 @@ export const ordersHandlers = [
   }),
 
   // POST /api/v1/orders/:id/payment/retry
-  http.post('/api/v1/orders/:id/payment/retry', ({ params }) => {
+  http.post('*/orders/:id/payment/retry', ({ params }) => {
     const { id } = params as { id: string };
     const order = mockOrders.get(id);
 

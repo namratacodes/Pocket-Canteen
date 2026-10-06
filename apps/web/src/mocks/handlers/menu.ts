@@ -33,19 +33,19 @@ export const toggleItemAvailability = (canteenId: string, itemId: string) => {
 };
 
 export const menuHandlers = [
-  http.get('/api/v1/canteens/:id/menu', ({ params }) => {
+  http.get('*/canteens/:id/menu', ({ params }) => {
     const { id } = params as { id: string };
     const items = mockMenuItems[id] || [];
     return HttpResponse.json(items);
   }),
 
-  http.get('/api/v1/canteens/:id/combos', ({ params }) => {
+  http.get('*/canteens/:id/combos', ({ params }) => {
     const { id } = params as { id: string };
     const combos = mockCombos[id] || [];
     return HttpResponse.json(combos);
   }),
 
-  http.post('/api/v1/predict/eta-preview', async ({ request }) => {
+  http.post('*/predict/eta-preview', async ({ request }) => {
     const body = (await request.json().catch(() => ({}))) as {
       canteenId?: string;
       items?: { menuItemId: string; quantity: number }[];

@@ -10,11 +10,11 @@ export const resetMockCanteens = () => {
 };
 
 export const canteensHandlers = [
-  http.get('/api/v1/canteens', () => {
+  http.get('*/canteens', () => {
     return HttpResponse.json(mockCanteens);
   }),
 
-  http.get('/api/v1/canteens/:id', ({ params }) => {
+  http.get('*/canteens/:id', ({ params }) => {
     const { id } = params;
     const canteen = mockCanteens.find((c) => c.id === id);
 
