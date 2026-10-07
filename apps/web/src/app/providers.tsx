@@ -7,6 +7,7 @@ import { api } from '@/lib/api/client';
 import { socket } from '@/lib/socket/socketClient';
 import { FullPageSpinner } from '@/components/common/FullPageSpinner';
 import type { AuthResponse } from '@/types';
+import { PwaPrompts } from '@/pwa/PwaPrompts';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -60,6 +61,7 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
             },
           }}
         />
+        <PwaPrompts />
       </AuthBootstrap>
     </QueryClientProvider>
   );

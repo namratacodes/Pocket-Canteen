@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import { Providers } from './app/providers';
 import { router } from './app/router';
 import './styles/globals.css';
+import { initPwa } from './pwa/initPwa';
 
 async function initApp() {
   if (import.meta.env.VITE_USE_MOCKS === 'true') {
@@ -29,5 +30,5 @@ async function initApp() {
     </React.StrictMode>
   );
 }
-
+initPwa();
 initApp();
