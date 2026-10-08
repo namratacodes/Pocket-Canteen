@@ -8,9 +8,12 @@ import { qk } from '@/lib/api/queryKeys';
 import { formatINR } from '@/lib/format';
 import { cn } from '@/lib/utils';
 import type { Wallet as WalletType } from '@/types';
+import { OfflineBanner } from '@/components/common/OfflineBanner';
+import { useIsOnline } from '@/lib/network/useOnlineStatus';
 
 export const StudentShell: React.FC = () => {
   const navigate = useNavigate();
+  const online = useIsOnline();
 
   const { data: wallet } = useQuery({
     queryKey: qk.wallet,
@@ -30,7 +33,9 @@ export const StudentShell: React.FC = () => {
       {/* Mobile-first frame */}
       <div className="w-full max-w-[480px] min-h-screen bg-background border-x border-border shadow-sm flex flex-col relative pb-20">
         {/* Top Header */}
-        <header className="sticky top-0 z-40 flex items-center justify-between border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+        <div className="sticky top-0 z-40">
+        <OfflineBanner variant="student" />
+        <header className="flex items-center justify-between border-b bg-background/95 px-4 py-3 backdrop-blur supports-[backdrop-filter]:bg-background/80">
           <div className="flex items-center gap-2">
             <span className="text-xl">🍽</span>
             <span className="font-bold tracking-tight text-base text-foreground">
@@ -49,8 +54,12 @@ export const StudentShell: React.FC = () => {
             <span className="font-mono">
               {wallet !== undefined ? formatINR(wallet.balance) : '₹--'}
             </span>
+          {!online && (
+              <span className="text-[10px] font-normal text-amber-700">may be outdated</span>
+            )}
           </button>
         </header>
+        </div>
 
         {/* Main Content Area */}
         <main className="flex-1 p-4">

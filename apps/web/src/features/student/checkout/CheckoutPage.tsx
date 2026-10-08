@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import {
@@ -21,6 +21,8 @@ import { api } from '@/lib/api/client';
 import { qk } from '@/lib/api/queryKeys';
 import { formatINR, formatTime } from '@/lib/format';
 import type { Wallet } from '@/types';
+import { useIsOnline } from '@/lib/network/useOnlineStatus';
+import { setCheckoutActive } from '@/pwa/pwaStore';
 
 export const CheckoutPage: React.FC = () => {
   const navigate = useNavigate();
@@ -30,6 +32,13 @@ export const CheckoutPage: React.FC = () => {
   const remove = useCartStore((state) => state.remove);
   const subtotal = useCartStore(selectSubtotal);
   const count = useCartStore(selectCount);
+  const online = useIsOnline();
+
+  // Hold the "new version available" message while the student is paying.
+  useEffect(() => {
+    setCheckoutActive(true);
+    return () => setCheckoutActive(false);
+  }, []);
 
   // Fetch live wallet balance
   const walletQuery = useQuery({
@@ -145,6 +154,10 @@ export const CheckoutPage: React.FC = () => {
                   ? 'Item Sold Out'
                   : orderError.code === 'CANTEEN_CLOSED'
                   ? 'Canteen Closed'
+                  : orderError.code === 'NETWORK'
+                  ? 'Order Not Confirmed'
+                  : orderError.code === 'OFFLINE'
+                  ? "You're Offline"
                   : 'Order Failed'}
               </h4>
               <p className="text-xs font-normal text-destructive/90 mt-0.5 leading-relaxed">
@@ -182,8 +195,19 @@ export const CheckoutPage: React.FC = () => {
             {orderError.code === 'NETWORK' && (
               <Button
                 size="sm"
+                onClick={() => navigate('/student/orders')}
+                className="h-8 px-3 rounded-lg text-xs font-semibold"
+              >
+                Check My Orders
+              </Button>
+            )}
+
+            {orderError.code === 'NETWORK' && (
+              <Button
+                size="sm"
                 variant="outline"
                 onClick={handlePlaceOrder}
+                disabled={!online}
                 className="h-8 px-3 rounded-lg text-xs font-semibold border-destructive/40 text-destructive hover:bg-destructive/10"
               >
                 Try Again
@@ -277,7 +301,7 @@ export const CheckoutPage: React.FC = () => {
         <div className="w-full max-w-[448px]">
           <Button
             type="button"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !online}
             onClick={handlePlaceOrder}
             className="w-full h-14 rounded-2xl bg-brand text-white font-bold text-base shadow-float hover:opacity-95 active:scale-[0.99] transition-all flex items-center justify-center gap-2"
           >
@@ -294,7 +318,9 @@ export const CheckoutPage: React.FC = () => {
               <>
                 <ShieldCheck className="h-5 w-5" />
                 <span>
-                  {gatewayAmount === 0
+                  {!online
+                    ? 'Connect to order'
+                    : gatewayAmount === 0
                     ? 'Place Order (Paid by Wallet)'
                     : `Pay ${formatINR(gatewayAmount)} & Place Order`}
                 </span>

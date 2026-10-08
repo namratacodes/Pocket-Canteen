@@ -9,6 +9,7 @@ import { Card } from '@/components/ui/card';
 import { ApiError } from '@/lib/api/client';
 import { adminApi } from '@/lib/api/adminApi';
 import { queryKeys } from '@/lib/api/queryKeys';
+import { adminCanteenKey } from '@/lib/api/featureKeys';
 import type { AdminCanteen } from '@/types/admin';
 import { canteenSchema, fromCanteen, toCreateInput, type CanteenFormValues } from './canteenSchema';
 import { BasicStep } from './steps/BasicStep';
@@ -30,7 +31,7 @@ export const CanteenInfoForm: React.FC<{ canteen: AdminCanteen }> = ({ canteen }
     setSaving(true);
     try {
       const updated = await adminApi.updateCanteen(canteen.id, { name, location, imageUrl, fssaiLicenseNo, operatingHours });
-      qc.setQueryData(queryKeys.admin.canteen(canteen.id), updated);
+      qc.setQueryData(adminCanteenKey(canteen.id), updated);
       qc.invalidateQueries({ queryKey: queryKeys.admin.canteens });
       form.reset(fromCanteen(updated));
       toast.success('Canteen details saved');

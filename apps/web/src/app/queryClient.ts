@@ -11,7 +11,14 @@ export const queryClient = new QueryClient({
         return false;
       },
       staleTime: 30_000,
+      // Still try the request when offline, so the saved copy from the service worker can answer
+      // instead of the screen going blank.
+      networkMode: 'offlineFirst',
       refetchOnWindowFocus: true,
+    },
+    // Never hold an action (order, payment, settlement) while offline and replay it later.
+    mutations: {
+      networkMode: 'always',
     },
   },
 });

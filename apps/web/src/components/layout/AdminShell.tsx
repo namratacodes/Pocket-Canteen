@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import { api } from '@/lib/api/client';
 import { queryClient } from '@/app/queryClient';
 import { socket } from '@/lib/socket/socketClient';
+import { OfflineBanner } from '@/components/common/OfflineBanner';
 
 export const AdminShell: React.FC = () => {
   const user = useAuth((state) => state.user);
@@ -118,6 +119,8 @@ export const AdminShell: React.FC = () => {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <OfflineBanner variant="admin" />
+
         {/* Top Header */}
         <header className="h-16 flex-shrink-0 bg-background/80 backdrop-blur border-b border-border px-8 flex items-center justify-between">
           <div className="flex items-center gap-3">

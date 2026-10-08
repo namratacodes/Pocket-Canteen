@@ -140,8 +140,9 @@ export async function openCheckout(opts: RazorpayCheckoutOptions): Promise<'succ
 
   const loaded = await loadRazorpayScript();
   if (!loaded || !window.Razorpay) {
-    // Fallback to mock modal if real Razorpay fails to load
-    return openMockRazorpayModal(opts);
+    // Never show the fake test gateway outside mock mode. A failed script load (offline, blocked)
+    // must surface as an error, not as a "Simulate Payment Success" button.
+    throw new Error("Couldn't load the payment page. Check your internet connection and try again.");
   }
 
   return new Promise((resolve) => {

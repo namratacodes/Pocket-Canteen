@@ -63,6 +63,14 @@ export function useCreateOrder() {
   const createOrder = async ({ useWallet }: { useWallet: boolean }) => {
     if (step !== 'idle') return; // Guard against double submission
 
+    if (typeof navigator !== 'undefined' && navigator.onLine === false) {
+      setOrderError({
+        code: 'OFFLINE',
+        message: "You're offline. Connect to the internet to place your order.",
+      });
+      return;
+    }
+
     const { canteenId, lines } = cartStore;
     if (!canteenId || Object.keys(lines).length === 0) {
       toast.error('Your cart is empty');
@@ -150,7 +158,10 @@ export function useCreateOrder() {
       if (err instanceof ApiError) {
         setOrderError({
           code: err.code,
-          message: err.message,
+          message:
+            err.code === 'NETWORK'
+              ? "We couldn't confirm your order. Check My orders when you're back online before trying again."
+              : err.message,
           details: err.details,
         });
 
@@ -181,7 +192,8 @@ export function useCreateOrder() {
       } else {
         setOrderError({
           code: 'NETWORK',
-          message: "Couldn't reach server. Check your internet connection.",
+          message:
+          "We couldn't confirm your order. Check My orders when you're back online before trying again.",
         });
         toast.error("Couldn't reach server. Check your connection.");
       }

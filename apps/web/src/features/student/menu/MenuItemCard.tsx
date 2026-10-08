@@ -8,6 +8,7 @@ import { QtyStepper } from './QtyStepper';
 import type { MenuItem } from '@/types';
 import { useCartStore } from '@/stores/cartStore';
 import { cn } from '@/lib/utils';
+import { useIsOnline } from '@/lib/network/useOnlineStatus';
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -28,6 +29,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
   const add = useCartStore((state) => state.add);
   const inc = useCartStore((state) => state.inc);
   const dec = useCartStore((state) => state.dec);
+  const online = useIsOnline();
 
   const currentLine = lines[item.id];
   const qty = currentLine?.qty ?? 0;
@@ -130,9 +132,11 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({
                 type="button"
                 size="sm"
                 onClick={handleAdd}
+                disabled={!online}
+                aria-label={online ? undefined : 'Connect to order'}
                 className="h-8 px-4 text-xs font-bold rounded-xl bg-brand text-white shadow-sm hover:opacity-90 active:scale-95"
               >
-                ADD
+                {online ? 'ADD' : 'OFFLINE'}
               </Button>
             )}
           </div>

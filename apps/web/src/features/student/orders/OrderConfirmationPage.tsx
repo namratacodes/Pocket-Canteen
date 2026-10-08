@@ -23,7 +23,9 @@ import { usePickupCodeStore } from '@/stores/pickupCodeStore';
 import { openCheckout } from '@/lib/payments/razorpay';
 import { api, ApiError } from '@/lib/api/client';
 import { qk } from '@/lib/api/queryKeys';
-import { formatTime, formatDate } from '@/lib/format';
+import { formatTime, formatDate, formatINR } from '@/lib/format';
+import { useIsOnline } from '@/lib/network/useOnlineStatus';
+import { PickupCodeFallback } from './PickupCodeFallback';
 import type { Order } from '@/types';
 
 export const OrderConfirmationPage: React.FC = () => {
@@ -34,6 +36,7 @@ export const OrderConfirmationPage: React.FC = () => {
 
   const isFresh = searchParams.get('fresh') === '1';
   const isPendingQuery = searchParams.get('pending') === '1';
+  const online = useIsOnline();
 
   const storedCodeData = usePickupCodeStore((state) => state.getCode(orderId));
   const [isRetryingPayment, setIsRetryingPayment] = useState(false);
@@ -105,6 +108,19 @@ export const OrderConfirmationPage: React.FC = () => {
     return <FullPageSpinner />;
   }
 
+  if ((isError || !order) && storedCodeData) {
+    // The pickup code lives on this phone, so it stays visible even when the order can't be loaded.
+    return (
+      <div className="space-y-4 pb-12">
+        <PickupCodeFallback
+          tokenNo={storedCodeData.tokenNo}
+          code={storedCodeData.code}
+          onRetry={() => refetch()}
+        />
+      </div>
+    );
+  }
+
   if (isError || !order) {
     return (
       <div className="py-8">
@@ -121,6 +137,15 @@ export const OrderConfirmationPage: React.FC = () => {
 
   return (
     <div className="space-y-4 pb-12">
+      {!online && (
+        <div
+          role="status"
+          className="rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-900"
+        >
+          Offline. This is the last saved status. It will update when you're back online.
+        </div>
+      )}
+
       {/* Fresh Order Celebration Banner */}
       {isFresh && !isPaymentPending && (
         <div className="rounded-2xl border border-success/30 bg-success-soft p-4 flex items-center gap-3 text-success animate-in fade-in slide-in-from-top-4 duration-300">
@@ -155,7 +180,7 @@ export const OrderConfirmationPage: React.FC = () => {
 
           <Button
             type="button"
-            disabled={isRetryingPayment}
+            disabled={isRetryingPayment || !online}
             onClick={handleRetryPayment}
             className="w-full h-11 rounded-xl bg-brand text-white font-semibold text-xs shadow-sm hover:opacity-90 active:scale-95 flex items-center justify-center gap-2"
           >

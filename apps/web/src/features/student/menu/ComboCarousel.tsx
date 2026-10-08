@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Price } from '@/components/common/Price';
 import type { ComboSuggestion, MenuItem } from '@/types';
 import { useCartStore } from '@/stores/cartStore';
+import { useIsOnline } from '@/lib/network/useOnlineStatus';
 
 interface ComboCarouselProps {
   combos: ComboSuggestion[];
@@ -23,6 +24,7 @@ export const ComboCarousel: React.FC<ComboCarouselProps> = ({
   onNeedsSwitch,
 }) => {
   const add = useCartStore((state) => state.add);
+  const online = useIsOnline();
 
   if (!combos || combos.length === 0) return null;
 
@@ -99,12 +101,12 @@ export const ComboCarousel: React.FC<ComboCarouselProps> = ({
 
                   <Button
                     size="sm"
-                    disabled={!isCanteenOpen || hasSoldOut}
+                    disabled={!isCanteenOpen || hasSoldOut || !online}
                     onClick={() => handleAddCombo(combo)}
                     className="h-8 px-3 rounded-xl bg-brand text-white text-xs font-semibold hover:opacity-90 active:scale-95 shadow-xs"
                   >
                     <Plus className="h-3.5 w-3.5 mr-1" />
-                    <span>Add both</span>
+                    <span>{online ? 'Add both' : 'Offline'}</span>
                   </Button>
                 </div>
               </CardContent>

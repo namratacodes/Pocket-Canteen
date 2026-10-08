@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
+import { InstallAppCard } from '@/pwa/InstallAppCard';
 
 export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -41,6 +42,8 @@ export const ProfilePage: React.FC = () => {
           Account details and preferences
         </p>
       </div>
+
+      <InstallAppCard />
 
       {/* Account Info Card */}
       <Card className="border shadow-sm">

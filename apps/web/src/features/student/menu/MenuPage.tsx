@@ -20,6 +20,7 @@ import { FloatingCartBar } from '@/features/student/cart/FloatingCartBar';
 import { CanteenSwitchDialog } from '@/features/student/cart/CanteenSwitchDialog';
 import type { MenuItem } from '@/types';
 import type { ApiError } from '@/lib/api/client';
+import { LastUpdatedNote } from '@/components/common/LastUpdatedNote';
 
 export const MenuPage: React.FC = () => {
   const { canteenId = '' } = useParams<{ canteenId: string }>();
@@ -207,6 +208,8 @@ export const MenuPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      <LastUpdatedNote scope={'menu:' + canteenId} hasData={menuItems.length > 0} />
 
       {/* Controls: Search and Veg Only Toggle */}
       <div className="flex items-center gap-3">

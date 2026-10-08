@@ -9,7 +9,7 @@ import { ErrorState } from '@/components/common/ErrorState';
 import { SkeletonCard } from '@/components/common/SkeletonCard';
 import { ApiError } from '@/lib/api/client';
 import { adminApi } from '@/lib/api/adminApi';
-import { queryKeys } from '@/lib/api/queryKeys';
+import { adminCanteenKey } from '@/lib/api/featureKeys';
 import { OpenBadge, KycBadge } from '../shared/StatusPill';
 import { CanteenInfoForm } from './CanteenInfoForm';
 import { CanteenPaymentTab } from './CanteenPaymentTab';
@@ -24,7 +24,7 @@ export const CanteenDetailPage: React.FC = () => {
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const query = useQuery({
-    queryKey: queryKeys.admin.canteen(id),
+    queryKey: adminCanteenKey(id),
     queryFn: () => adminApi.canteen(id),
     enabled: !!id,
     retry: (count, err) => !(err instanceof ApiError && err.status === 404) && count < 2,

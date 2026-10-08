@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import { api } from '@/lib/api/client';
 import { queryClient } from '@/app/queryClient';
 import { socket } from '@/lib/socket/socketClient';
+import { OfflineBanner } from '@/components/common/OfflineBanner';
 
 export const StaffShell: React.FC = () => {
   const user = useAuth((state) => state.user);
@@ -110,6 +111,8 @@ export const StaffShell: React.FC = () => {
 
       {/* Main Container */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <OfflineBanner variant="kitchen" />
+
         {/* Top Kitchen Bar */}
         <header className="h-16 flex-shrink-0 bg-slate-900/90 border-b border-slate-800 px-6 flex items-center justify-between select-none">
           <div className="flex items-center gap-4">

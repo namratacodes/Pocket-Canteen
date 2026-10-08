@@ -9,6 +9,8 @@ import { ErrorState } from '@/components/common/ErrorState';
 import { EmptyState } from '@/components/common/EmptyState';
 import { formatINR } from '@/lib/format';
 import type { ApiError } from '@/lib/api/client';
+import { LastUpdatedNote } from '@/components/common/LastUpdatedNote';
+import { InstallAppCard } from '@/pwa/InstallAppCard';
 
 export const CanteenSelectorPage: React.FC = () => {
   const navigate = useNavigate();
@@ -65,6 +67,10 @@ export const CanteenSelectorPage: React.FC = () => {
           </span>
         </button>
       </div>
+
+      <InstallAppCard />
+
+      <LastUpdatedNote scope="canteens" hasData={canteens.length > 0} />
 
       {/* Search Bar */}
       <div className="relative">

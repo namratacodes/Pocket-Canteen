@@ -12,6 +12,7 @@ import { Price } from '@/components/common/Price';
 import { QtyStepper } from './QtyStepper';
 import type { MenuItem } from '@/types';
 import { useCartStore } from '@/stores/cartStore';
+import { useIsOnline } from '@/lib/network/useOnlineStatus';
 
 interface ItemDetailSheetProps {
   item: MenuItem | null;
@@ -36,6 +37,7 @@ export const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
   const add = useCartStore((state) => state.add);
   const inc = useCartStore((state) => state.inc);
   const dec = useCartStore((state) => state.dec);
+  const online = useIsOnline();
 
   const currentLine = lines[item.id];
   const qty = currentLine?.qty ?? 0;
@@ -134,9 +136,10 @@ export const ItemDetailSheet: React.FC<ItemDetailSheetProps> = ({
             ) : (
               <Button
                 onClick={handleAdd}
+                disabled={!online}
                 className="h-11 px-8 rounded-xl font-semibold bg-brand text-white shadow-sm hover:opacity-90 active:scale-95"
               >
-                Add to Cart
+                {online ? 'Add to Cart' : 'Connect to order'}
               </Button>
             )}
           </div>

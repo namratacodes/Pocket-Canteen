@@ -18,6 +18,7 @@ import {
   selectCount,
 } from '@/stores/cartStore';
 import type { MenuItem, ComboSuggestion } from '@/types';
+import { useIsOnline } from '@/lib/network/useOnlineStatus';
 
 interface CartSheetProps {
   open: boolean;
@@ -43,6 +44,7 @@ export const CartSheet: React.FC<CartSheetProps> = ({
 
   const subtotal = useCartStore(selectSubtotal);
   const count = useCartStore(selectCount);
+  const online = useIsOnline();
 
   // Reconcile with menu on open
   useEffect(() => {
@@ -151,6 +153,7 @@ export const CartSheet: React.FC<CartSheetProps> = ({
                     size="sm"
                     variant="outline"
                     onClick={() => add(upsellMissingItem, canteenName || '')}
+                    disabled={!online}
                     className="h-8 px-3 rounded-lg text-xs font-bold text-brand border-brand/30 hover:bg-brand/10 flex-shrink-0"
                   >
                     <Plus className="h-3 w-3 mr-1" />
@@ -175,9 +178,10 @@ export const CartSheet: React.FC<CartSheetProps> = ({
             <Button
               type="button"
               onClick={handleCheckout}
+              disabled={!online}
               className="w-full h-12 rounded-xl bg-brand text-white font-bold text-sm shadow-sm hover:opacity-90 active:scale-[0.99] flex items-center justify-center gap-2"
             >
-              <span>Proceed to Checkout</span>
+              <span>{online ? 'Proceed to Checkout' : 'Connect to order'}</span>
               <ArrowRight className="h-4 w-4 stroke-[2.5]" />
             </Button>
           </div>
