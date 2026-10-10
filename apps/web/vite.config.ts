@@ -38,7 +38,7 @@ export default defineConfig({
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/api\//, /^\/mockServiceWorker\.js$/],
         // App shell: scripts, styles, icons, sounds, and only the Latin fonts.
-        globPatterns: ['**/*.{js,css,html,svg,png,mp3}', '**/*-latin-*.woff2'],
+        globPatterns: ['**/*.{js,css,html,svg,png,mp3,wav}', '**/*-latin-*.woff2'],
         globIgnores: ['**/mockServiceWorker.js'],
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
         cleanupOutdatedCaches: true,
