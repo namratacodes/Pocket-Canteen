@@ -11,6 +11,7 @@ import { formatINR } from '@/lib/format';
 import type { ApiError } from '@/lib/api/client';
 import { LastUpdatedNote } from '@/components/common/LastUpdatedNote';
 import { InstallAppCard } from '@/pwa/InstallAppCard';
+import { ActiveOrderBanner } from '@/features/student/orders/ActiveOrderBanner';
 
 export const CanteenSelectorPage: React.FC = () => {
   const navigate = useNavigate();
