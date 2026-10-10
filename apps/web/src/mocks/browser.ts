@@ -7,10 +7,11 @@ import { canteensHandlers } from './handlers/canteens';
 import { menuHandlers } from './handlers/menu';
 import { walletHandlers } from './handlers/wallet';
 import { ordersHandlers } from './handlers/orders';
+import { kitchenHandlers } from './handlers/kitchen';
 
 export const worker = setupWorker(
   viteSourceGuard,
-  ...adminHandlers,
+  ...kitchenHandlers, ...adminHandlers,
   ...analyticsHandlers,
   ...authHandlers,
   ...canteensHandlers,

@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import type { OrderStatus, PaymentStatus } from '@/types';
 
-export interface StatusBadgeProps {
+export interface StatusBadgeProps { audience?: string;
   status: OrderStatus;
   paymentStatus?: PaymentStatus;
   isStudent?: boolean;
@@ -36,7 +36,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
   return (
     <Badge
-      variant={meta.color}
+      variant={meta.color === 'danger' ? 'destructive' : meta.color}
       className={cn('gap-1.5 font-medium py-1 px-2.5', className)}
     >
       <Icon className="h-3.5 w-3.5" />
