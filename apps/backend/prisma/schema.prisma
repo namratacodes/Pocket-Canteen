@@ -1,0 +1,309 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  student
+  staff
+  admin
+}
+
+enum OrderStatus {
+  pending_payment
+  placed
+  preparing
+  ready
+  completed
+  cancelled
+}
+
+enum PaymentStatus {
+  pending
+  paid
+  failed
+  refunded_to_wallet
+}
+
+enum WalletEntryType {
+  checkout_hold
+  checkout_capture
+  hold_release
+  refund_credit
+  refund_restore
+  admin_adjustment
+  expiry
+}
+
+model Canteen {
+  id             String   @id @default(uuid()) @db.Uuid
+  name           String   @db.VarChar(100)
+  location       String   @db.VarChar(200)
+  tokenPrefix    String   @unique @db.Char(1) @map("token_prefix")
+  isOpen         Boolean  @default(true) @map("is_open")
+  fssaiLicenseNo String   @db.VarChar(50) @map("fssai_license_no")
+  operatingHours Json @map("operating_hours")
+  createdAt      DateTime @default(now()) @db.Timestamptz @map("created_at")
+  updatedAt      DateTime @updatedAt @db.Timestamptz @map("updated_at")
+
+  menuItems      MenuItem[]
+  orders         Order[]
+  paymentAccount CanteenPaymentAccount[]
+  users          User[]
+
+  @@map("canteens")
+}
+
+model CanteenPaymentAccount {
+  id                 String  @id @default(uuid()) @db.Uuid
+  canteenId          String  @db.Uuid @map("canteen_id")
+  razorpayAccountRef String  @db.VarChar(100) @map("razorpay_account_ref")
+  bankAccountLast4   String  @db.Char(4) @map("bank_account_last4")
+  kycStatus          String  @default("verified") @db.VarChar(20) @map("kyc_status")
+  isActive           Boolean @default(true) @map("is_active")
+
+  canteen Canteen @relation(fields: [canteenId], references: [id], onDelete: Restrict)
+
+  @@map("canteen_payment_accounts")
+}
+
+model User {
+  id           String   @id @default(uuid()) @db.Uuid
+  name         String   @db.VarChar(100)
+  phone        String?  @unique @db.VarChar(15)
+  email        String   @unique @db.VarChar(120)
+  passwordHash String? @map("password_hash")
+  role         UserRole @default(student)
+  canteenId    String?  @db.Uuid @map("canteen_id")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @db.Timestamptz @map("created_at")
+
+  canteen Canteen? @relation(fields: [canteenId], references: [id])
+  wallet  Wallet?
+  orders  Order[]  @relation("student")
+
+  @@index([canteenId])
+  @@map("users")
+}
+
+model MenuItem {
+  id              String   @id @default(uuid()) @db.Uuid
+  canteenId       String   @db.Uuid @map("canteen_id")
+  name            String   @db.VarChar(120)
+  price           Decimal  @db.Decimal(10, 2)
+  category        String   @db.VarChar(50)
+  isAvailable     Boolean  @default(true) @map("is_available")
+  imageUrl        String? @map("image_url")
+  updatedByUserId String?  @db.Uuid @map("updated_by_user_id")
+  updatedAt       DateTime @updatedAt @db.Timestamptz @map("updated_at")
+
+  canteen    Canteen               @relation(fields: [canteenId], references: [id], onDelete: Cascade)
+  prep       MenuItemPrepMetadata?
+  orderItems OrderItem[]
+
+  @@index([canteenId, isAvailable])
+  @@map("menu_items")
+}
+
+model MenuItemPrepMetadata {
+  menuItemId           String  @id @db.Uuid @map("menu_item_id")
+  basePrepSeconds      Int     @default(180) @map("base_prep_seconds")
+  prepComplexityWeight Decimal @default(1.00) @db.Decimal(3, 2) @map("prep_complexity_weight")
+  cookingStation       String  @default("main_counter") @db.VarChar(50) @map("cooking_station")
+  batchable            Boolean @default(false)
+
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+
+  @@map("menu_item_prep_metadata")
+}
+
+model MenuAuditLog {
+  id         BigInt   @id @default(autoincrement())
+  menuItemId String   @db.Uuid @map("menu_item_id")
+  userId     String   @db.Uuid @map("user_id")
+  field      String   @db.VarChar(40)
+  oldValue   String? @map("old_value")
+  newValue   String? @map("new_value")
+  changedAt  DateTime @default(now()) @db.Timestamptz @map("changed_at")
+
+  @@index([menuItemId, changedAt])
+  @@map("menu_audit_log")
+}
+
+model Order {
+  id                   String        @id @default(uuid()) @db.Uuid
+  orderUid             String        @unique @db.VarChar(24) @map("order_uid")
+  clientRequestId      String        @db.VarChar(64) @map("client_request_id")
+  tokenNo              String        @db.VarChar(10) @map("token_no")
+  pickupSalt           String        @db.VarChar(32) @map("pickup_salt")
+  pickupAttempts       Int           @default(0) @map("pickup_attempts")
+  pickupLockedAt       DateTime?     @db.Timestamptz @map("pickup_locked_at")
+  studentId            String        @db.Uuid @map("student_id")
+  canteenId            String        @db.Uuid @map("canteen_id")
+  status               OrderStatus   @default(pending_payment)
+  totalAmount          Decimal       @db.Decimal(10, 2) @map("total_amount")
+  walletAmountApplied  Decimal       @default(0) @db.Decimal(10, 2) @map("wallet_amount_applied")
+  gatewayAmount        Decimal       @default(0) @db.Decimal(10, 2) @map("gateway_amount")
+  paymentStatus        PaymentStatus @default(pending) @map("payment_status")
+  paymentRef           String?       @db.VarChar(100) @map("payment_ref")
+  estimatedPrepSeconds Int? @map("estimated_prep_seconds")
+  etaSource            String?       @db.VarChar(10) @map("eta_source")
+  predictedReadyAt     DateTime?     @db.Timestamptz @map("predicted_ready_at")
+  placedAt             DateTime?     @db.Timestamptz @map("placed_at")
+  readyAt              DateTime?     @db.Timestamptz @map("ready_at")
+  actualPrepSeconds    Int? @map("actual_prep_seconds")
+  cancelledByUserId    String?       @db.Uuid @map("cancelled_by_user_id")
+  cancelReason         String? @map("cancel_reason")
+  expiresAt            DateTime?     @db.Timestamptz @map("expires_at")
+  createdAt            DateTime      @default(now()) @db.Timestamptz @map("created_at")
+  updatedAt            DateTime      @updatedAt @db.Timestamptz @map("updated_at")
+
+  student   User             @relation("student", fields: [studentId], references: [id])
+  canteen   Canteen          @relation(fields: [canteenId], references: [id])
+  items     OrderItem[]
+  statusLog OrderStatusLog[]
+  payments  PaymentAttempt[]
+
+  @@unique([studentId, clientRequestId])
+  @@index([canteenId, status])
+  @@index([studentId, createdAt])
+  @@index([status, expiresAt])
+  @@map("orders")
+}
+
+model OrderItem {
+  id               String  @id @default(uuid()) @db.Uuid
+  orderId          String  @db.Uuid @map("order_id")
+  menuItemId       String  @db.Uuid @map("menu_item_id")
+  quantity         Int
+  priceAtOrderTime Decimal @db.Decimal(10, 2) @map("price_at_order_time")
+
+  order    Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id])
+
+  @@index([orderId])
+  @@map("order_items")
+}
+
+model OrderStatusLog {
+  id              BigInt       @id @default(autoincrement())
+  orderId         String       @db.Uuid @map("order_id")
+  fromStatus      OrderStatus? @map("from_status")
+  toStatus        OrderStatus @map("to_status")
+  changedByUserId String?      @db.Uuid @map("changed_by_user_id")
+  note            String?
+  changedAt       DateTime     @default(now()) @db.Timestamptz @map("changed_at")
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([toStatus, changedAt])
+  @@map("order_status_log")
+}
+
+model PaymentAttempt {
+  id                String   @id @default(uuid()) @db.Uuid
+  orderId           String   @db.Uuid @map("order_id")
+  razorpayOrderId   String   @unique @db.VarChar(100) @map("razorpay_order_id")
+  razorpayPaymentId String?  @unique @db.VarChar(100) @map("razorpay_payment_id")
+  amount            Decimal  @db.Decimal(10, 2)
+  status            String   @default("created") @db.VarChar(20)
+  createdAt         DateTime @default(now()) @db.Timestamptz @map("created_at")
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@index([orderId])
+  @@map("payment_attempts")
+}
+
+model WebhookEvent {
+  eventId     String    @id @db.VarChar(100) @map("event_id")
+  eventType   String    @db.VarChar(60) @map("event_type")
+  receivedAt  DateTime  @default(now()) @db.Timestamptz @map("received_at")
+  processedAt DateTime? @db.Timestamptz @map("processed_at")
+
+  @@map("webhook_events")
+}
+
+model Wallet {
+  userId    String   @id @db.Uuid @map("user_id")
+  balance   Decimal  @default(0) @db.Decimal(10, 2)
+  updatedAt DateTime @updatedAt @db.Timestamptz @map("updated_at")
+
+  user   User           @relation(fields: [userId], references: [id])
+  ledger WalletLedger[]
+
+  @@map("wallets")
+}
+
+model WalletLedger {
+  id                BigInt          @id @default(autoincrement())
+  userId            String          @db.Uuid @map("user_id")
+  entryType         WalletEntryType @map("entry_type")
+  amount            Decimal         @db.Decimal(10, 2)
+  orderId           String?         @db.Uuid @map("order_id")
+  fundedByCanteenId String?         @db.Uuid @map("funded_by_canteen_id")
+  reason            String          @db.VarChar(255)
+  balanceAfter      Decimal         @db.Decimal(10, 2) @map("balance_after")
+  createdAt         DateTime        @default(now()) @db.Timestamptz @map("created_at")
+
+  wallet Wallet @relation(fields: [userId], references: [userId])
+
+  @@unique([orderId, entryType], name: "uq_order_entry_type")
+  @@index([userId, createdAt])
+  @@index([fundedByCanteenId, createdAt])
+  @@map("wallet_ledger")
+}
+
+model CanteenDailyCounter {
+  canteenId String   @db.Uuid @map("canteen_id")
+  day       DateTime @db.Date
+  lastToken Int      @default(0) @map("last_token")
+
+  @@id([canteenId, day])
+  @@map("canteen_daily_counters")
+}
+
+model CanteenSettlement {
+  id                String    @id @default(uuid()) @db.Uuid
+  periodStart       DateTime  @db.Date @map("period_start")
+  periodEnd         DateTime  @db.Date @map("period_end")
+  canteenId         String    @db.Uuid @map("canteen_id")
+  creditIssued      Decimal   @default(0) @db.Decimal(10, 2) @map("credit_issued")
+  creditRedeemed    Decimal   @default(0) @db.Decimal(10, 2) @map("credit_redeemed")
+  netPayableAmount  Decimal   @db.Decimal(10, 2) @map("net_payable_amount")
+  settledAt         DateTime? @db.Timestamptz @map("settled_at")
+  recordedByAdminId String?   @db.Uuid @map("recorded_by_admin_id")
+  createdAt         DateTime  @default(now()) @db.Timestamptz @map("created_at")
+
+  @@unique([periodStart, periodEnd, canteenId])
+  @@map("canteen_settlements")
+}
+
+model OtpChallenge {
+  id         String    @id @default(uuid()) @db.Uuid
+  email      String    @db.VarChar(120)
+  codeHash   String    @db.VarChar(64) @map("code_hash")
+  attempts   Int       @default(0)
+  expiresAt  DateTime  @db.Timestamptz @map("expires_at")
+  consumedAt DateTime? @db.Timestamptz @map("consumed_at")
+  createdAt  DateTime  @default(now()) @db.Timestamptz @map("created_at")
+
+  @@index([email, createdAt])
+  @@map("otp_challenges")
+}
+
+model RefreshToken {
+  id        String    @id @default(uuid()) @db.Uuid
+  userId    String    @db.Uuid @map("user_id")
+  tokenHash String    @unique @db.VarChar(64) @map("token_hash")
+  expiresAt DateTime  @db.Timestamptz @map("expires_at")
+  revokedAt DateTime? @db.Timestamptz @map("revoked_at")
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
