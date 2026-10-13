@@ -1,0 +1,13 @@
+name,price_paise,category,base_prep_seconds,weight,station,batchable
+Samosa,1500,Snacks,60,1.0,fryer,true
+Tea,1000,Beverages,60,1.0,beverage,true
+Coffee,2000,Beverages,90,1.0,beverage,true
+Cold Coffee,4000,Beverages,120,1.2,beverage,false
+Veg Sandwich,4500,Snacks,240,1.2,main_counter,false
+Grilled Sandwich,6000,Snacks,300,1.4,griddle,false
+Masala Dosa,7000,South Indian,360,1.4,griddle,false
+Veg Burger,5500,Fast Food,300,1.5,griddle,false
+Chicken Burger,8500,Fast Food,420,1.6,griddle,false
+Veg Fried Rice,8000,Meals,420,1.5,wok,false
+Maggi,4000,Snacks,240,1.2,main_counter,false
+French Fries,5000,Snacks,240,1.2,fryer,true
