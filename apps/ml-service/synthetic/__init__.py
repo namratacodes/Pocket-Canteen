@@ -1,0 +1,1 @@
+"""Synthetic campus generator package."""
